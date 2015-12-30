@@ -34,4 +34,4 @@ deploy:
   api_key: $NPM_API_KEY
   on:
     tags: true
-    repo: zaklinaczekodu/gulp-zkflow-angular
+    repo: zaklinaczekodu/zkflow-watcher
