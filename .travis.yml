@@ -1,0 +1,37 @@
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+
+language: node_js
+
+node_js:
+  - 0.10
+  - 0.12
+  - 4
+  - 5
+
+os:
+  - linux
+#  - osx
+
+env:
+  global:
+    - CC=gcc-4.9 CXX=g++-4.9
+
+before_install:
+  - npm update -g npm
+
+script:
+  - ./node_modules/.bin/gulp ci
+
+deploy:
+  provider: npm
+  email: bolczyslaw@gmail.com
+  api_key: $NPM_API_KEY
+  on:
+    tags: true
+    repo: zaklinaczekodu/gulp-zkflow-angular
