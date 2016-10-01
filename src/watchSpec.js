@@ -1,7 +1,37 @@
 'use strict';
 
 var proxyquire = require('proxyquire');
-var Promise = require('pinkie-promise');
+
+function shouldWatch(next, that) {
+
+  setTimeout(check);
+
+  function check() {
+    expect(that.gulpWatchMock).toHaveBeenCalledWith(that.globs, jasmine.any(Function));
+    next();
+  }
+
+}
+
+function checkRunTaskAfterLastRun(next, that) {
+
+  setTimeout(check);
+
+  function check() {
+    that.task.calls.reset();
+    that.gulpWatchMock.calls.argsFor(0)[1]();
+    expect(that.task).not.toHaveBeenCalled();
+    that.task.calls.reset();
+    that.resolveTask();
+    setTimeout(check2);
+  }
+
+  function check2() {
+    expect(that.task).toHaveBeenCalled();
+    next();
+  }
+
+}
 
 describe('zkflowWatcher.watch', function() {
 
@@ -51,6 +81,7 @@ describe('zkflowWatcher.watch', function() {
 
     beforeEach(function() {
       this.watch(this.task, true, this.globs, this.loggerMock);
+
     });
 
     it('and task is not finished should not watch', function() {
@@ -59,73 +90,29 @@ describe('zkflowWatcher.watch', function() {
 
     it('and task resolves should watch', function(next) {
 
-      var that = this;
       this.resolveTask();
-      setTimeout(check);
-
-      function check() {
-        expect(that.gulpWatchMock).toHaveBeenCalledWith(that.globs, jasmine.any(Function));
-        next();
-      }
+      shouldWatch(next, this);
 
     });
 
     it('and task rejects should watch', function(next) {
 
-      var that = this;
       this.rejectTask();
-      setTimeout(check);
-
-      function check() {
-        expect(that.gulpWatchMock).toHaveBeenCalledWith(that.globs, jasmine.any(Function));
-        next();
-      }
+      shouldWatch(next, this);
 
     });
 
     it('and file is changed should run task after last run resolves', function(next) {
 
-      var that = this;
-
       this.resolveTask();
-      setTimeout(check);
-
-      function check() {
-        that.task.calls.reset();
-        that.gulpWatchMock.calls.argsFor(0)[1]();
-        expect(that.task).not.toHaveBeenCalled();
-        that.task.calls.reset();
-        that.resolveTask();
-        setTimeout(check2);
-      }
-
-      function check2() {
-        expect(that.task).toHaveBeenCalled();
-        next();
-      }
+      checkRunTaskAfterLastRun(next, this);
 
     });
 
     it('and file is changed should run task after last run rejects', function(next) {
 
-      var that = this;
-
       this.rejectTask();
-      setTimeout(check);
-
-      function check() {
-        that.task.calls.reset();
-        that.gulpWatchMock.calls.argsFor(0)[1]();
-        expect(that.task).not.toHaveBeenCalled();
-        that.task.calls.reset();
-        that.resolveTask();
-        setTimeout(check2);
-      }
-
-      function check2() {
-        expect(that.task).toHaveBeenCalled();
-        next();
-      }
+      checkRunTaskAfterLastRun(next, this);
 
     });
 
@@ -183,6 +170,5 @@ describe('zkflowWatcher.watch', function() {
     });
 
   });
-
 
 });
