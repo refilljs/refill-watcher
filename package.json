@@ -1,11 +1,11 @@
 {
-  "name": "zkflow-watcher",
+  "name": "refill-watcher",
   "version": "0.1.0",
-  "description": "Watcher for zkflow tasks",
+  "description": "Watcher for refill tasks",
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zaklinaczekodu/zkflow-watcher.git"
+    "url": "https://github.com/refilljs/refill-watcher.git"
   },
   "keywords": [
     "watch",
@@ -15,9 +15,13 @@
   "author": "Piotr Baranowski <piotr.baranowski@zaklinaczekodu.com> (https://github.com/zaklinaczekodu)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zaklinaczekodu/zkflow-watcher/issues"
+    "url": "https://github.com/refilljs/refill-watcher/issues"
   },
-  "homepage": "https://github.com/zaklinaczekodu/zkflow-watcher",
+  "homepage": "https://github.com/refilljs/refill-watcher",
+  "engines": {
+    "node": ">=4.2",
+    "npm": ">=3.3.3"
+  },
   "dependencies": {
     "gulp-watch": "4.3.10"
   },
