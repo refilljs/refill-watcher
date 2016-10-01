@@ -19,12 +19,11 @@
   },
   "homepage": "https://github.com/zaklinaczekodu/zkflow-watcher",
   "dependencies": {
-    "gulp-watch": "4.3.5",
-    "pinkie-promise": "2.0.0"
+    "gulp-watch": "4.3.10"
   },
   "devDependencies": {
-    "gulp": "3.9.0",
-    "gulp-zkflow-nodemodule": "0.1.1",
-    "proxyquire": "1.7.3"
+    "gulp": "3.9.1",
+    "proxyquire": "1.7.10",
+    "zkflow-node": "1.0.0"
   }
 }
