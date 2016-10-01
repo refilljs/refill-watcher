@@ -1,37 +1,41 @@
+sudo: required
+dist: trusty
+
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - gcc-4.9
-      - g++-4.9
+      - gcc-5
+      - g++-5
 
 language: node_js
 
 node_js:
-  - 0.10
-  - 0.12
-  - 4
+  - 6
   - 5
+  - 4
 
 os:
   - linux
-#  - osx
+  - osx
 
 env:
   global:
-    - CC=gcc-4.9 CXX=g++-4.9
+    - CC=gcc-5 CXX=g++-5
 
 before_install:
-  - npm update -g npm
+  - npm install -g npm@latest
 
 script:
   - ./node_modules/.bin/gulp ci
 
 deploy:
   provider: npm
-  email: bolczyslaw@gmail.com
+  email: piotr.baranowski@zaklinaczekodu.com
   api_key: $NPM_API_KEY
   on:
+    node: 6
+    condition: $TRAVIS_OS_NAME == linux
     tags: true
-    repo: zaklinaczekodu/zkflow-watcher
+    repo: refilljs/refill-watcher
